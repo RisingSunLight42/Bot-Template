@@ -1,36 +1,9 @@
-import {
-    Client,
-    Collection,
-    RESTPostAPIApplicationCommandsJSONBody,
-} from "discord.js";
+import { Client, Collection } from "discord.js";
+import { Button, Command, Menu, Modal } from "./DiscordElement";
 
 export interface ClientExtend extends Client {
-    commands?: Collection<
-        string,
-        {
-            data: RESTPostAPIApplicationCommandsJSONBody;
-            execute: AsyncGeneratorFunction;
-        }
-    >;
-    buttons?: Collection<
-        string,
-        {
-            name: string;
-            execute: AsyncGeneratorFunction;
-        }
-    >;
-    menus?: Collection<
-        string,
-        {
-            name: string;
-            execute: AsyncGeneratorFunction;
-        }
-    >;
-    modals?: Collection<
-        string,
-        {
-            name: string;
-            execute: AsyncGeneratorFunction;
-        }
-    >;
+    commands?: Collection<string, Command>;
+    buttons?: Collection<string, Button>;
+    menus?: Collection<string, Menu>;
+    modals?: Collection<string, Modal>;
 }
