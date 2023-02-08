@@ -34,7 +34,9 @@ export const execution = async (
         console.error(error);
         const gestionnaire = await client.users.fetch(gestionnaireID);
         await gestionnaire.send(
-            `Une erreur a été rencontrée lors de l'utilisation ${bugText} ${interaction.customId} par ${interaction.user.tag}.`
+            `Une erreur a été rencontrée lors de l'utilisation ${bugText} ${
+                isCommand(element) ? element.data.name : element.name
+            } par ${interaction.user.tag}.`
         );
         await interaction.reply({
             content: `Une erreur est survenue durant l'exécution ${bugText}. Un rapport d'erreur a été envoyé à mon développeur !`,
