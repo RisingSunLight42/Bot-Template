@@ -69,7 +69,4 @@ for (const file of modalFiles) {
     client.modals.set(modal.name, modal);
 }
 
-client.commissions = {};
-client.profiles = {};
-
 client.login(clientToken);
