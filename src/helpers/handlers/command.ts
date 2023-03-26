@@ -17,5 +17,5 @@ export const handleCommand = async (
             ephemeral: true,
         });
 
-    execution(command, client, interaction, "de la command");
+    execution(command, client, interaction, "de la commande");
 };

@@ -14,5 +14,5 @@ export const handleButton = async (
 
     if (!button) return;
 
-    execution(button, client, interaction, "de la command");
+    execution(button, client, interaction, "du bouton");
 };

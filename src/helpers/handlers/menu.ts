@@ -10,5 +10,5 @@ export const handleMenu = async (
 
     if (!menu) return;
 
-    execution(menu, client, interaction, "de la command");
+    execution(menu, client, interaction, "du menu");
 };

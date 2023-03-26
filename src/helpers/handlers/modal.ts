@@ -13,5 +13,5 @@ export const handleModal = async (
 
     if (!modal) return;
 
-    execution(modal, client, interaction, "de la command");
+    execution(modal, client, interaction, "du modal");
 };
