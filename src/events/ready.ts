@@ -1,7 +1,7 @@
 import { deployGlobal, deployGestion, recupFichier } from "../deployCommands";
 import { ClientExtend } from "../helpers/types/ClientExtend";
 import { CronJob } from "cron";
-import { statusChange } from "../helpers/functions/statusChange";
+import { statusChange } from "../helpers/utils/statusChange";
 require("dotenv").config();
 
 const guildGestionId = process.env.GUILD_GESTION_ID;

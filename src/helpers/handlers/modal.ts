@@ -1,5 +1,5 @@
 import { ModalSubmitInteraction } from "discord.js";
-import { execution } from "../functions/execution";
+import { execution } from "../utils/execution";
 import { ClientExtend } from "../types/ClientExtend";
 
 export const handleModal = async (
