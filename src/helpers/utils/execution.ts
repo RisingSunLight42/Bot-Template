@@ -1,7 +1,7 @@
 import {
     ChatInputCommandInteraction,
     ButtonInteraction,
-    SelectMenuInteraction,
+    StringSelectMenuInteraction,
     ModalSubmitInteraction,
 } from "discord.js";
 import { ClientExtend } from "../types/ClientExtend";
@@ -22,7 +22,7 @@ export const execution = async (
     interaction:
         | ChatInputCommandInteraction
         | ButtonInteraction
-        | SelectMenuInteraction
+        | StringSelectMenuInteraction
         | ModalSubmitInteraction,
     bugText: string
 ) => {
