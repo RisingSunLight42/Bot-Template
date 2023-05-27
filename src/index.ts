@@ -1,39 +1,37 @@
-// Import dependencies
 import { Client, Collection } from "discord.js";
 import { readdirSync } from "fs";
-import { ClientExtend } from "./helpers/types/ClientExtend";
 import path from "path";
+import { isClientExtend } from "./helpers/utils/isClientExtend";
 require("dotenv").config();
 
 const clientToken = process.env.CLIENT_TOKEN;
 
-const client: ClientExtend = new Client({
+const client = new Client({
     intents: [],
 });
 
-// Fetch commands
-client.commands = new Collection();
-const commandFiles = readdirSync(path.join(__dirname, ".", "commands")).filter(
-    (file) => file.endsWith(".js") || file.endsWith(".ts")
-);
+const collectionsObject: {
+    [type: string]: Collection<string, any> | undefined;
+} = {
+    commands: new Collection(),
+    buttons: new Collection(),
+    menus: new Collection(),
+    modals: new Collection(),
+};
 
-for (const file of commandFiles) {
-    const command = require(`./commands/${file}`);
-    client.commands.set(command.data.name, command);
+for (let [type, value] of Object.entries(collectionsObject)) {
+    const files = readdirSync(path.join(__dirname, ".", type)).filter(
+        (file) => file.endsWith(".js") || file.endsWith(".ts")
+    );
+    for (const file of files) {
+        const component = require(`./${type}/${file}`);
+        if (type === "commands") value?.set(component.data.name, component);
+        else value?.set(component.name, component);
+    }
+    collectionsObject[type] = value;
 }
+Object.assign(client, collectionsObject);
 
-// Fetch buttons
-client.buttons = new Collection();
-const buttonFiles = readdirSync(path.join(__dirname, ".", "buttons")).filter(
-    (file) => file.endsWith(".js") || file.endsWith(".ts")
-);
-
-for (const file of buttonFiles) {
-    const button = require(`./buttons/${file}`);
-    client.buttons.set(button.name, button);
-}
-
-// Fetch events
 const eventFiles = readdirSync(path.join(__dirname, ".", "events")).filter(
     (file) => file.endsWith(".js") || file.endsWith(".ts")
 );
@@ -47,26 +45,8 @@ for (const file of eventFiles) {
     }
 }
 
-// Fetch menus
-client.menus = new Collection();
-const menuFiles = readdirSync(path.join(__dirname, ".", "menus")).filter(
-    (file) => file.endsWith(".js") || file.endsWith(".ts")
-);
-
-for (const file of menuFiles) {
-    const menu = require(`./menus/${file}`);
-    client.menus.set(menu.name, menu);
-}
-
-// Fetch modals
-client.modals = new Collection();
-const modalFiles = readdirSync(path.join(__dirname, ".", "modals")).filter(
-    (file) => file.endsWith(".js") || file.endsWith(".ts")
-);
-
-for (const file of modalFiles) {
-    const modal = require(`./modals/${file}`);
-    client.modals.set(modal.name, modal);
-}
-
+if (!isClientExtend(client))
+    throw new Error(
+        "Client object is not properly extended, one of the required property is missing."
+    );
 client.login(clientToken);
