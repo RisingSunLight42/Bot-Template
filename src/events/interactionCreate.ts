@@ -1,7 +1,7 @@
 import {
     ChatInputCommandInteraction,
     ButtonInteraction,
-    SelectMenuInteraction,
+    StringSelectMenuInteraction,
     ModalSubmitInteraction,
 } from "discord.js";
 import { handleCommand } from "../helpers/handlers/command";
@@ -17,16 +17,13 @@ module.exports = {
         interaction:
             | ChatInputCommandInteraction
             | ButtonInteraction
-            | SelectMenuInteraction
+            | StringSelectMenuInteraction
             | ModalSubmitInteraction
     ) {
-        if (interaction.isCommand())
-            await handleCommand(interaction.client, interaction);
-        if (interaction.isButton())
-            await handleButton(interaction.client, interaction);
-        if (interaction.isSelectMenu())
-            await handleMenu(interaction.client, interaction);
-        if (interaction.isModalSubmit())
-            await handleModal(interaction.client, interaction);
+        if (interaction.isCommand()) await handleCommand(client, interaction);
+        if (interaction.isButton()) await handleButton(client, interaction);
+        if (interaction.isStringSelectMenu())
+            await handleMenu(client, interaction);
+        if (interaction.isModalSubmit()) await handleModal(client, interaction);
     },
 };
