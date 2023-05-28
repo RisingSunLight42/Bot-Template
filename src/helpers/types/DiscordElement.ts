@@ -5,9 +5,8 @@ interface DiscordElement {
     execute: AsyncGeneratorFunction;
 }
 
-export interface Command {
+export interface Command extends DiscordElement {
     data: RESTPostAPIApplicationCommandsJSONBody;
-    execute: AsyncGeneratorFunction;
 }
 
 export interface Button extends DiscordElement {}

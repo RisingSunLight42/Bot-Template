@@ -6,7 +6,6 @@ import {
 } from "discord.js";
 import { ClientExtend } from "../types/ClientExtend";
 import { Button, Command, Menu, Modal } from "../types/DiscordElement";
-import { isCommand } from "./isCommand";
 require("dotenv").config();
 
 const gestionnaireID = process.env.GESTIONNAIRE_ID;
@@ -27,16 +26,12 @@ export const execution = async (
     bugText: string
 ) => {
     try {
-        isCommand(element)
-            ? element.execute(interaction)
-            : element.execute(client, interaction);
+        element.execute(client, interaction);
     } catch (error) {
         console.error(error);
         const gestionnaire = await client.users.fetch(gestionnaireID);
         await gestionnaire.send(
-            `Une erreur a été rencontrée lors de l'utilisation ${bugText} ${
-                isCommand(element) ? element.data.name : element.name
-            } par ${interaction.user.tag}.`
+            `Une erreur a été rencontrée lors de l'utilisation ${bugText} ${element.name} par ${interaction.user.tag}.`
         );
         await interaction.reply({
             content: `Une erreur est survenue durant l'exécution ${bugText}. Un rapport d'erreur a été envoyé à mon développeur !`,
